@@ -1,0 +1,64 @@
+# Inisialisasi daftar buku yang tersedia dan yang dipinjam
+buku_tersedia = ['Buku A', 'Buku B', 'Buku C']
+buku_dipinjam = []
+
+# Tampilkan menu pilihan peminjaman atau pengembalian buku
+while True:
+    print("Silahkan pilih menu:")
+    print("1. Peminjaman buku")
+    print("2. Pengembalian buku")
+    print("3. Keluar")
+    menu = input("Masukkan pilihan (1/2/3): ")
+
+    # Peminjaman buku
+    if menu == '1':
+        # Tampilkan daftar buku yang tersedia
+        print("Daftar buku yang tersedia: ")
+        for buku in buku_tersedia:
+            print("- " + buku)
+        
+        # Minta user memilih buku yang ingin dipinjam
+        buku = input("Masukkan nama buku yang ingin dipinjam: ")
+        
+        # Periksa apakah buku tersedia
+        if buku in buku_tersedia:
+            # Mintal user memasukkan tanggal peminjaman dan pengembalian
+            tgl_pinjam = input("Masukkan tanggal peminjaman: ")
+            tgl_kembali = input("Masukkan tanggal pengembalian: ")
+
+            # Tambahkan buku ke daftar buku yang dipinjam dan hapus dari daftar buku yang tersedia
+            buku_tersedia.remove(buku)
+            buku_dipinjam.append((buku, tgl_pinjam, tgl_kembali))
+            print(f"{buku} telah berhasil dipinjam.")
+
+        else:
+            print(f"{buku} tidak tersedia.")
+    
+    # Pengembalian buku
+    elif menu == '2':
+        # Tampilkan daftar buku yang dipinjam
+        print("Daftar buku yang dipinjam: ")
+        for buku, tgl_pinjam, tgl_kembali in buku_dipinjam:
+            print("- " + buku + " (" + tgl_pinjam + " - " + tgl_kembali + ")")
+        
+        # Minta user memilih buku yang ingin dikembalikan
+        buku = input("Masukkan nama buku yang ingin dikembalikan: ")
+
+        # Periksa apakah buku sedang dipinjam
+        for i, (buku_pinjam, tgl_pinjam, tgl_kembali) in enumerate(buku_dipinjam):
+            if buku == buku_pinjam:
+                # Hapus buku dari daftar buku yang dipinjam dan tambahkan kembali ke daftar buku yang tersedia
+                buku_dikembalikan = buku_dipinjam.pop(i)
+                buku_tersedia.append(buku_dikembalikan[0])
+                print(f"{buku} telah berhasil dikembalikan.")
+                break
+        else:
+            print(f"{buku} tidak sedang dipinjam.")
+
+    # Keluar dari program
+    elif menu == '3':
+        break
+
+    # Invalid menu
+    else:
+        print("Pilihan tidak valid.")
